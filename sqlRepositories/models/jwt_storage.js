@@ -36,7 +36,9 @@ module.exports = function (sequelize, DataTypes) {
       tableName: 'jwt_storage',
       createdAt: 'created_at',
       updatedAt: 'updated_at',
-      timestamps: true
+      deletedAt: 'deleted_at',
+      timestamps: true,
+      paranoid: true
     }
   );
 };
