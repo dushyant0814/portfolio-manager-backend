@@ -1,15 +1,24 @@
 const app = require('../app');
 const debug = require('debug')('smallcase-backend-server:server');
 const http = require('http');
+const models = require('../sqlRepositories/models');
+const config = require('config');
 const port = normalizePort(process.env.PORT || '3011');
 app.set('port', port);
-const server = http.createServer(app);
 
-server.listen(port, function () {
-  console.log('Express server listening on port ' + server.address().port);
-});
-server.on('error', onError);
-server.on('listening', onListening);
+models.sequelize
+  .sync({ alter: (config.has('alter') && config.get('alter')) || false, drop: false })
+  .then(async () => {
+    /**
+     * Listen on provided port, on all network interfaces.
+     */
+    server.listen(port, function () {
+      console.log('Express server listening on port ' + server.address().port);
+    });
+    server.on('error', onError);
+    server.on('listening', onListening);
+  });
+var server = http.createServer(app);
 
 function normalizePort(val) {
   var port = parseInt(val, 10);
