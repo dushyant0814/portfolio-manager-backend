@@ -68,5 +68,6 @@
     "password_reset_secret": "password_reset_secret",
     "salt_rounds": 12,
     "expiration": 3600000
-  }
+  },
+  "oneDaySeconds": 86400000
 }

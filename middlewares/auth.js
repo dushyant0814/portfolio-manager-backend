@@ -13,6 +13,7 @@ module.exports = async (req, res, next) => {
 
   try {
     const decodedToken = await jwt.verify(token, config.get('auth.company_secret'));
+    req.decodedTokenData = decodedToken.data;
     next();
   } catch (e) {
     return res.status(401).send({

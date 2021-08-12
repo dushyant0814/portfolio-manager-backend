@@ -62,6 +62,17 @@ funcs.generateLoginJwt = async function ({ id, email, name, username }) {
   return jwtToken;
 };
 
+funcs.logout = async function ({ token, user_id }) {
+  if (!user_id || !token)
+    throw {
+      msg:
+        'user_id isnecessary field to process the request' +
+        'token is also required, in case if you want to expire only single token',
+      status: config.get('httpStatusCodes.badRequest')
+    };
+  return await jwtResolvers.expireJwt({ query: { token, user_id, expires_at: null } });
+};
+
 module.exports = funcs;
 
 async function findUserWithEmail({ email }) {
