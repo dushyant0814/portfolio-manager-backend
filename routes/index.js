@@ -1,4 +1,5 @@
 const express = require('express');
+const authRoutes = require('./auth');
 const router = express.Router();
 
 router.use('/health', (req, res) => {
@@ -6,7 +7,7 @@ router.use('/health', (req, res) => {
     message: 'OK'
   });
 });
-
+router.use('/auth', authRoutes);
 router.use(function (req, res) {
   let path = req._parsedUrl.pathname.toLowerCase();
   let splittedPath = path.split('/');
