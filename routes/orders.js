@@ -4,7 +4,7 @@ const service = require('../services/auth');
 const requestHandler = require('./requestHandler');
 
 router.get('/dummy', async function (req, res, next) {
-  return res.status(200).send({ message: 'success' });
+  return res.status(200).send({ message: 'success', data: req.decodedTokenData });
 });
 
 module.exports = router;

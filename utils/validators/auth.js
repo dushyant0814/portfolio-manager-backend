@@ -10,6 +10,9 @@ const validators = {
       body('email').exists().withMessage('email key is missing'),
       body('password').exists().withMessage('password key is missing')
     ]
+  },
+  delete: {
+    '/logout': []
   }
 };
 
