@@ -62,5 +62,11 @@
     "loopDetected": "508",
     "notExtended": "510",
     "networkAuthenticationRequired": "511"
+  },
+  "auth": {
+    "company_secret": "company_secret",
+    "password_reset_secret": "password_reset_secret",
+    "salt_rounds": 12,
+    "expiration": 3600000
   }
 }
