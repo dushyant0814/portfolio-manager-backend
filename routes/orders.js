@@ -1,10 +1,20 @@
 const express = require('express');
 const router = express.Router();
-const service = require('../services/auth');
+const service = require('../services/orders');
 const requestHandler = require('./requestHandler');
 
-router.get('/dummy', async function (req, res, next) {
-  return res.status(200).send({ message: 'success', data: req.decodedTokenData });
-});
+router.post(
+  '/create-trade',
+  requestHandler.handleRequest(async function (req, res, next) {
+    return res.status(200).send({
+      message: 'success',
+      data:
+        (await service.upsertTrade({
+          ...req.body,
+          portfolio_id: req.decodedTokenData.data.portfolio_id
+        })) || {}
+    });
+  })
+);
 
 module.exports = router;

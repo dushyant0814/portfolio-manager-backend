@@ -1,5 +1,6 @@
 const config = require('config');
 const jwt = require('jsonwebtoken');
+const orderManager = require('../sqlRepositories/orders');
 module.exports = async (req, res, next) => {
   const authHeader =
     req.get('Authorization') ||
@@ -13,7 +14,12 @@ module.exports = async (req, res, next) => {
 
   try {
     const decodedToken = await jwt.verify(token, config.get('auth.company_secret'));
-    req.decodedTokenData = decodedToken.data;
+    const userPortfolioId = await orderManager.getPortfolio({
+      query: { user_id_fk: decodedToken.data.id },
+      attributes: ['id']
+    });
+    decodedToken.data.portfolio_id = userPortfolioId.id;
+    req.decodedTokenData = decodedToken;
     next();
   } catch (e) {
     return res.status(401).send({

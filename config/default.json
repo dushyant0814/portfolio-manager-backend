@@ -69,5 +69,11 @@
     "salt_rounds": 12,
     "expiration": 3600000
   },
-  "oneDaySeconds": 86400000
+  "oneDaySeconds": 86400000,
+  "trade": {
+    "type": {
+      "BUY": "BUY",
+      "SELL": "SELL"
+    }
+  }
 }

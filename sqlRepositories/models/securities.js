@@ -16,7 +16,8 @@ module.exports = function (sequelize, DataTypes) {
       },
       ticker_symbol: {
         type: DataTypes.STRING(5),
-        allowNull: true
+        allowNull: true,
+        unique: true
       },
       created_at: {
         type: DataTypes.DATE,
@@ -36,6 +37,12 @@ module.exports = function (sequelize, DataTypes) {
       createdAt: 'created_at',
       updatedAt: 'updated_at',
       deletedAt: 'deleted_at',
+      indexes: [
+        {
+          fields: ['name'],
+          unique: true
+        }
+      ],
       paranoid: true
     }
   );

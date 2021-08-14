@@ -36,10 +36,9 @@ module.exports = function (sequelize, DataTypes) {
         type: DataTypes.INTEGER(11).UNSIGNED,
         allowNull: false,
         references: {
-          model: 'users',
+          model: 'portfolio',
           key: 'id'
-        },
-        unique: true // 1 user 1 portfolio
+        }
       },
       created_at: {
         type: DataTypes.DATE,

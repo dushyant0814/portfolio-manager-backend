@@ -1,7 +1,9 @@
 const authManager = require('../sqlRepositories/auth');
+const orderManager = require('../sqlRepositories/orders');
 const jwtResolvers = require('../sqlRepositories/jwtStorage');
 const config = require('config');
 const bcrypt = require('bcrypt');
+const sequelize = require('../sqlRepositories/models/index').sequelize;
 const jwt = require('jsonwebtoken');
 let funcs = {};
 
@@ -12,16 +14,38 @@ funcs.createUser = async function ({ name, username, email, mobile, password }) 
       status: config.get('httpStatusCodes.conflict')
     };
   }
-  const userCreatedResponse = await authManager.createUser({
-    model: {
-      name,
-      username,
-      email,
-      mobile,
-      password: await bcrypt.hash(password, config.get(`auth.salt_rounds`))
+  const transaction = await sequelize.transaction();
+  try {
+    const userCreatedResponse = await authManager.createUser(
+      {
+        model: {
+          name,
+          username,
+          email,
+          mobile,
+          password: await bcrypt.hash(password, config.get(`auth.salt_rounds`))
+        }
+      },
+      transaction
+    );
+    const portfolioResponse = await orderManager.createPortfolio(
+      {
+        model: {
+          user_id_fk: userCreatedResponse.id
+        }
+      },
+      transaction
+    );
+    if (transaction) {
+      await transaction.commit();
     }
-  });
-  return userCreatedResponse;
+    return { userCreatedResponse, portfolioResponse };
+  } catch (e) {
+    if (transaction) {
+      await transaction.rollback();
+    }
+    throw e;
+  }
 };
 
 funcs.login = async function ({ email, password }) {
