@@ -3,7 +3,7 @@ const { users, jwt_storage } = require('./models');
 let funcs = {};
 
 funcs.createUser = async function ({ model }, transaction) {
-  return users.create(model);
+  return users.create(model, { transaction });
 };
 
 funcs.findUser = async function ({
