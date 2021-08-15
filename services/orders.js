@@ -118,4 +118,13 @@ funcs.fetchPortfolio = async function ({
     securityAttributes: ['ticker_symbol']
   });
 };
+
+funcs.fetchReturns = async function ({ portfolio_id }) {
+  return await orderManager.getUserPortfolioInfo({
+    findAll: true,
+    query: { portfolio_id_fk: portfolio_id },
+    attributes: ['avg_buy_price', 'quantity', 'security_id_fk'],
+    securityAttributes: ['ticker_symbol']
+  });
+};
 module.exports = funcs;

@@ -16,12 +16,26 @@ funcs.getUserPortfolioInfo = async function ({
   offset = config.get('offset'),
   securityAttributes = { exclude: ['created_at', 'updated_at', 'deleted_at'] },
   findAndCountAll = false,
+  findAll = false,
   attributes = { exclude: ['created_at', 'updated_at', 'deleted_at'] }
 }) {
   if (findAndCountAll) {
     return user_portfolio_info.findAndCountAll({
       limit,
       offset,
+      where: query,
+      attributes,
+      include: [
+        {
+          model: securities,
+          attributes: securityAttributes,
+          required: true
+        }
+      ]
+    });
+  }
+  if (findAll) {
+    return user_portfolio_info.findAll({
       where: query,
       attributes,
       include: [

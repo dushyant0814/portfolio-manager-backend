@@ -46,4 +46,20 @@ router.get(
     });
   })
 );
+
+
+router.get(
+  '/fetch-returns',
+  requestHandler.handleRequest(async function (req, res, next) {
+    return res.status(200).send({
+      message: 'success',
+      data: serializer.fetchUserReturns(
+        await service.fetchReturns({
+          ...req.query,
+          portfolio_id: req.decodedTokenData.data.portfolio_id
+        })
+      )
+    });
+  })
+);
 module.exports = router;

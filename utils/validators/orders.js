@@ -57,7 +57,8 @@ const validators = {
             return parseInt(value);
           }
         })
-    ]
+    ],
+    '/fetch-returns': []
   }
 };
 
