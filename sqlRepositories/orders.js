@@ -1,5 +1,7 @@
 const { securities, transactions, user_portfolio_info, portfolio } = require('./models');
-
+/////////////////////////////MODEL-ASSOCIATIONS///////////////////////////////////////
+transactions.belongsTo(securities, { foreignKey: 'security_id_fk', targetKey: 'id' });
+//////////////////////////////////////////////////////////////////////////////////////
 let funcs = {};
 
 funcs.createTrade = async function ({ model }, transaction = null) {
@@ -30,5 +32,27 @@ funcs.getPortfolio = async function ({
   attributes = { exclude: ['created_at', 'updated_at', 'deleted_at'] }
 }) {
   return portfolio.findOne({ where: query, attributes });
+};
+
+funcs.getTransactions = async function ({
+  limit,
+  offset,
+  query,
+  attributes = { exclude: ['created_at', 'updated_at', 'deleted_at'] },
+  securityAttributes = { exclude: ['created_at', 'updated_at', 'deleted_at'] }
+}) {
+  return transactions.findAndCountAll({
+    limit,
+    offset,
+    where: query,
+    attributes,
+    include: [
+      {
+        model: securities,
+        attributes: securityAttributes,
+        required: true
+      }
+    ]
+  });
 };
 module.exports = funcs;

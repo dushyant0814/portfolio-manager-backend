@@ -24,6 +24,24 @@ const validators = {
         .isFloat({ gt: 0 })
         .withMessage('field must be of type integer')
     ]
+  },
+  get: {
+    '/fetch-trades': [
+      query('offset')
+        .optional()
+        .customSanitizer((value) => {
+          if (value) {
+            return parseInt(value);
+          }
+        }),
+      query('limit')
+        .optional()
+        .customSanitizer((value) => {
+          if (value) {
+            return parseInt(value);
+          }
+        })
+    ]
   }
 };
 
