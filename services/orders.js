@@ -42,6 +42,12 @@ funcs.upsertTrade = async function ({
           const portfolioInstance = await orderManager.getUserPortfolioInfo({
             query: { security_id_fk: stock_id, portfolio_id_fk: portfolio_id }
           });
+          if (!portfolioInstance && type == config.get('trade.type.SELL')) {
+            throw {
+              message: `User doesn't hold this security which they can sell`,
+              status: config.get('httpStatusCodes.badRequest')
+            };
+          }
           let createUserPortfolioInfo = null,
             updateUserPortfolioInfo = null;
           //if the instance doesn't exist it means the user is buying that particular stock for the first time
