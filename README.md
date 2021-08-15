@@ -52,6 +52,32 @@ curl --location --request DELETE 'https://portfolio-manager-101.herokuapp.com/au
 --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImVtYWlsIjoiaWFtZHVzaHlhbnQ4NjVAc3ByaW5ncm9sZS5jb20iLCJpZCI6NSwibmFtZSI6ImR1c2h5YW50In0sImlhdCI6MTYyODgwMTg2MiwiZXhwIjoxNjMyNDAxODYyfQ.9sYiiVZN0DTwBP1AC8VegXYMWRwWv0dTgC8SM-uEFmE'
 ```
 
+## Description: Fetch securities with following parameters
+#### **limit: Integer**
+#### **offset: Integer**
+## Method: GET
+## Returns list of securities
+
+```
+curl --location --request GET 'https://portfolio-manager-101.herokuapp.com/list?limit=10&offset=0'
+```
+
+## Description: Add securitywith following parameters
+#### **name: String**
+#### **ticker_symbol: String**
+## Method: POST
+## Returns security details
+
+```
+curl --location --request POST 'https://portfolio-manager-101.herokuapp.com/security/stock' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "name": "Redmi",
+    "ticker_symbol": "RDM"
+}'
+```
+
+
 ## Description: Create's trade with following parameters
 
 
