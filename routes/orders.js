@@ -18,7 +18,7 @@ router.post(
 );
 
 router.get(
-  '/fetch-trades',
+  '/trades',
   requestHandler.handleRequest(async function (req, res, next) {
     return res.status(200).send({
       message: 'success',
@@ -33,7 +33,7 @@ router.get(
 );
 
 router.get(
-  '/fetch-portfolio',
+  '/portfolio',
   requestHandler.handleRequest(async function (req, res, next) {
     return res.status(200).send({
       message: 'success',
@@ -47,9 +47,8 @@ router.get(
   })
 );
 
-
 router.get(
-  '/fetch-returns',
+  '/returns',
   requestHandler.handleRequest(async function (req, res, next) {
     return res.status(200).send({
       message: 'success',
@@ -64,7 +63,7 @@ router.get(
 );
 
 router.put(
-  '/update-trade',
+  '/trade',
   requestHandler.handleRequest(async function (req, res, next) {
     return res.status(200).send({
       message: 'success',
@@ -78,7 +77,7 @@ router.put(
 );
 
 router.delete(
-  '/remove-trade',
+  '/trade',
   requestHandler.handleRequest(async function (req, res, next) {
     return res.status(200).send({
       message: 'success',

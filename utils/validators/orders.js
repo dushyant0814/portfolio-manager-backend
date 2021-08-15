@@ -26,7 +26,7 @@ const validators = {
     ]
   },
   get: {
-    '/fetch-trades': [
+    '/trades': [
       query('offset')
         .optional()
         .customSanitizer((value) => {
@@ -42,7 +42,7 @@ const validators = {
           }
         })
     ],
-    '/fetch-portfolio': [
+    '/portfolio': [
       query('offset')
         .optional()
         .customSanitizer((value) => {
@@ -58,10 +58,10 @@ const validators = {
           }
         })
     ],
-    '/fetch-returns': []
+    '/returns': []
   },
   put: {
-    '/update-trade': [
+    '/trade': [
       body('type')
         .exists()
         .withMessage('field is required')
@@ -90,7 +90,7 @@ const validators = {
     ]
   },
   delete: {
-    '/remove-trade': [
+    '/trade': [
       body('trade_id')
         .exists()
         .withMessage('field is required')
