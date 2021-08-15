@@ -59,7 +59,7 @@ curl --location --request POST 'http://localhost:3011/orders/create-trade' \
 ### takes {type, stock_id, price, quantity, trade_id, Bearer token} as request parameters
 
 ```
-curl --location --request PUT 'http://localhost:3011/orders/update-trade' \
+curl --location --request PUT 'http://localhost:3011/orders/trade' \
 --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImVtYWlsIjoiaWFtZHVzaHlhbnRAZ21haWwuY29tIiwiaWQiOjEsIm5hbWUiOiJkdXNoeWFudCJ9LCJpYXQiOjE2MjkwMjE2MzAsImV4cCI6MTYzMjYyMTYzMH0.9eqqN8LCu-b8N-GoTtAIvWoDSYsLkbiwnmvxAWxmiyQ' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -69,4 +69,42 @@ curl --location --request PUT 'http://localhost:3011/orders/update-trade' \
     "quantity": 3,
     "trade_id": 8
 }'
+```
+## delete trade
+### takes {trade_id} as request paramerts
+
+```
+curl --location --request DELETE 'http://localhost:3011/orders/remove-trade' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImVtYWlsIjoiaWFtZHVzaHlhbnRAZ21haWwuY29tIiwiaWQiOjEsIm5hbWUiOiJkdXNoeWFudCJ9LCJpYXQiOjE2MjkwMjE2MzAsImV4cCI6MTYzMjYyMTYzMH0.9eqqN8LCu-b8N-GoTtAIvWoDSYsLkbiwnmvxAWxmiyQ' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "trade_id": 9
+}'
+
+```
+
+### fetch user trades
+### takes {limit, offset} as request parameters
+
+```
+curl --location --request GET 'http://localhost:3011/orders/trades?limit=10&page=0' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImVtYWlsIjoiaWFtZHVzaHlhbnRAZ21haWwuY29tIiwiaWQiOjEsIm5hbWUiOiJkdXNoeWFudCJ9LCJpYXQiOjE2MjkwMjE2MzAsImV4cCI6MTYzMjYyMTYzMH0.9eqqN8LCu-b8N-GoTtAIvWoDSYsLkbiwnmvxAWxmiyQ'
+```
+
+### fetch returns for a user
+
+### takes {} as request parameters
+
+```
+curl --location --request GET 'http://localhost:3011/orders/returns' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImVtYWlsIjoiaWFtZHVzaHlhbnRAZ21haWwuY29tIiwiaWQiOjEsIm5hbWUiOiJkdXNoeWFudCJ9LCJpYXQiOjE2MjkwMjE2MzAsImV4cCI6MTYzMjYyMTYzMH0.9eqqN8LCu-b8N-GoTtAIvWoDSYsLkbiwnmvxAWxmiyQ'
+```
+
+### fetch user's portfolio
+
+### takes {limit, offset} as request parameters
+
+```
+curl --location --request GET 'http://localhost:3011/orders/fportfolio?limit=10&page=0' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImVtYWlsIjoiaWFtZHVzaHlhbnRAZ21haWwuY29tIiwiaWQiOjEsIm5hbWUiOiJkdXNoeWFudCJ9LCJpYXQiOjE2MjkwMjE2MzAsImV4cCI6MTYzMjYyMTYzMH0.9eqqN8LCu-b8N-GoTtAIvWoDSYsLkbiwnmvxAWxmiyQ'
 ```
