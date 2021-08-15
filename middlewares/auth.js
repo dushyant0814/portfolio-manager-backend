@@ -1,6 +1,7 @@
 const config = require('config');
 const jwt = require('jsonwebtoken');
 const orderManager = require('../sqlRepositories/managers/orders');
+
 module.exports = async (req, res, next) => {
   const authHeader =
     req.get('Authorization') ||

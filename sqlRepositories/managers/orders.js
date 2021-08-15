@@ -101,4 +101,5 @@ funcs.deleteTransaction = async function ({ query }, transaction) {
 funcs.updateTransaction = async function ({ model, lastTransactionInstance }, transaction = null) {
   return lastTransactionInstance.update(model, { transaction });
 };
+
 module.exports = funcs;

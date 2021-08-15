@@ -1,5 +1,6 @@
-const { check, body, buildCheckFunction, query } = require('express-validator');
+const { body, query } = require('express-validator');
 const config = require('config');
+
 const validators = {
   post: {
     '/create-trade': [

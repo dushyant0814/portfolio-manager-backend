@@ -25,4 +25,5 @@ funcs.expireJwt = async function ({ query }) {
     expires_at: new Date(Date.now() - config.get('oneDaySeconds') * 365 * 50)
   });
 };
+
 module.exports = funcs;

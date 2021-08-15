@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "export NODE_ENV=production && node ./bin/www",
-    "start-local": "nodemon ./bin/www"
+    "start-local": "export NODE_ENV=localhost  && nodemon ./bin/www"
   },
   "dependencies": {
     "async": "^3.1.0",

@@ -158,6 +158,7 @@ funcs.updateTrade = async function ({
     throw e;
   }
 };
+
 module.exports = funcs;
 
 async function handleUpdateInPortfolio(
