@@ -138,7 +138,7 @@ curl --location --request GET 'https://portfolio-manager-101.herokuapp.com/order
 ```
 
 
-## Description: Fetches portfolio
+## Description: Fetch portfolio
 #### **Authorization token : String**
 #### **limit: Integer**
 #### **offset: Integer**
