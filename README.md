@@ -26,7 +26,7 @@ curl --location --request GET 'http://localhost:3011/health'
 }' 
 ```
 
-## Description : User login
+## Description : Logs in user with following parameter
 #### **password : String**
 #### **email : String**
 ## Method: POST
@@ -41,17 +41,26 @@ curl --location --request POST 'http://localhost:3011/auth/login' \
 }'
 ```
 
-## user logoout
-### takes {Bearer token} as request parameters
+## Description : User logout
+#### **Authorization token : String**
+## Method: DELETE
+
+## Expires user authentication tokem
 
 ```
 curl --location --request DELETE 'http://localhost:3011/auth/logout' \
 --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImVtYWlsIjoiaWFtZHVzaHlhbnQ4NjVAc3ByaW5ncm9sZS5jb20iLCJpZCI6NSwibmFtZSI6ImR1c2h5YW50In0sImlhdCI6MTYyODgwMTg2MiwiZXhwIjoxNjMyNDAxODYyfQ.9sYiiVZN0DTwBP1AC8VegXYMWRwWv0dTgC8SM-uEFmE'
 ```
 
-## create trade
+## Description: Create's trade with following parameters
 
-### takes {type, stock_id, price, quantity, Bearer token} as request parameters
+
+#### **Authorization token : String**
+#### **type: String**
+#### **stock_id: Integer**
+#### **price: Float**
+#### **quantity: Integer**
+
 
 ```
 curl --location --request POST 'http://localhost:3011/orders/create-trade' \
