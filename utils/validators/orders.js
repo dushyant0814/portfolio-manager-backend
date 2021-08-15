@@ -41,6 +41,22 @@ const validators = {
             return parseInt(value);
           }
         })
+    ],
+    '/fetch-portfolio': [
+      query('offset')
+        .optional()
+        .customSanitizer((value) => {
+          if (value) {
+            return parseInt(value);
+          }
+        }),
+      query('limit')
+        .optional()
+        .customSanitizer((value) => {
+          if (value) {
+            return parseInt(value);
+          }
+        })
     ]
   }
 };

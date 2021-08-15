@@ -103,4 +103,19 @@ funcs.fetchTrades = async function ({
     securityAttributes: ['ticker_symbol']
   });
 };
+
+funcs.fetchPortfolio = async function ({
+  portfolio_id,
+  limit = config.get('limit'),
+  offset = config.get('offset')
+}) {
+  return await orderManager.getUserPortfolioInfo({
+    limit,
+    offset: limit * offset,
+    findAndCountAll: true,
+    query: { portfolio_id_fk: portfolio_id },
+    attributes: ['avg_buy_price', 'quantity', 'security_id_fk'],
+    securityAttributes: ['ticker_symbol']
+  });
+};
 module.exports = funcs;
