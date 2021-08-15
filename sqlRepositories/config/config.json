@@ -13,5 +13,20 @@
       "idle": 30000,
       "acquire": 10000
     }
+  },
+  "production": {
+    "username": "sql6431060",
+    "password": "LAaFVYjkAS",
+    "database": "sql6431060",
+    "host": "sql6.freemysqlhosting.net",
+    "port": "3306",
+    "dialect": "mysql",
+    "timezone": "+05:30",
+    "pool": {
+      "max": 30,
+      "min": 1,
+      "idle": 30000,
+      "acquire": 10000
+    }
   }
 }
