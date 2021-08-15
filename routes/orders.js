@@ -62,4 +62,33 @@ router.get(
     });
   })
 );
+
+router.put(
+  '/update-trade',
+  requestHandler.handleRequest(async function (req, res, next) {
+    return res.status(200).send({
+      message: 'success',
+      data:
+        (await service.updateTrade({
+          ...req.body,
+          portfolio_id: req.decodedTokenData.data.portfolio_id
+        })) || {}
+    });
+  })
+);
+
+router.delete(
+  '/remove-trade',
+  requestHandler.handleRequest(async function (req, res, next) {
+    return res.status(200).send({
+      message: 'success',
+      data:
+        (await service.updateTrade({
+          ...req.body,
+          portfolio_id: req.decodedTokenData.data.portfolio_id,
+          delete_trade: true
+        })) || {}
+    });
+  })
+);
 module.exports = router;

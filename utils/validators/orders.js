@@ -59,6 +59,44 @@ const validators = {
         })
     ],
     '/fetch-returns': []
+  },
+  put: {
+    '/update-trade': [
+      body('type')
+        .exists()
+        .withMessage('field is required')
+        .isIn(Object.values(config.get('trade.type')))
+        .withMessage(`type must consist ${Object.values(config.get('trade.type'))}`),
+      body('stock_id')
+        .exists()
+        .withMessage('field is required')
+        .isInt()
+        .withMessage('field must be of type integer'),
+      body('price')
+        .exists()
+        .withMessage('field is required')
+        .isFloat({ gt: 0 })
+        .withMessage('field must be of type integer'),
+      body('quantity')
+        .exists()
+        .withMessage('field is required')
+        .isFloat({ gt: 0 })
+        .withMessage('field must be of type integer'),
+      body('trade_id')
+        .exists()
+        .withMessage('field is required')
+        .isFloat({ gt: 0 })
+        .withMessage('field must be of type integer')
+    ]
+  },
+  delete: {
+    '/remove-trade': [
+      body('trade_id')
+        .exists()
+        .withMessage('field is required')
+        .isFloat({ gt: 0 })
+        .withMessage('field must be of type integer')
+    ]
   }
 };
 

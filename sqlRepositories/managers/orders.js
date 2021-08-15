@@ -73,9 +73,13 @@ funcs.getTransactions = async function ({
   limit = config.get('limit'),
   offset = config.get('offset'),
   query,
+  findOne = false,
   attributes = { exclude: ['created_at', 'updated_at', 'deleted_at'] },
   securityAttributes = { exclude: ['created_at', 'updated_at', 'deleted_at'] }
 }) {
+  if (findOne) {
+    return transactions.findOne({ where: query, attributes });
+  }
   return transactions.findAndCountAll({
     limit,
     offset,
@@ -89,5 +93,12 @@ funcs.getTransactions = async function ({
       }
     ]
   });
+};
+
+funcs.deleteTransaction = async function ({ query }, transaction) {
+  return transactions.destroy({ where: query, transaction });
+};
+funcs.updateTransaction = async function ({ model, lastTransactionInstance }, transaction = null) {
+  return lastTransactionInstance.update(model, { transaction });
 };
 module.exports = funcs;
