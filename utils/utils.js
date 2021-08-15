@@ -19,5 +19,14 @@ module.exports = {
       }
     }
     return model;
+  },
+  getLastPortfolioInfo: function ({ portfolioInstance, lastTransactionInstance }) {
+    let model = {};
+    model.quantity = portfolioInstance.quantity - lastTransactionInstance.quantity;
+    model.avg_buy_price =
+      (portfolioInstance.avg_buy_price * portfolioInstance.quantity -
+        lastTransactionInstance.price * lastTransactionInstance.quantity) /
+      model.quantity;
+    return model;
   }
 };

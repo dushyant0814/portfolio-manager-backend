@@ -9,7 +9,8 @@ module.exports = {
           type_of_order: trade.type_of_trade,
           stock: trade.security && trade.security.ticker_symbol,
           price: trade.price,
-          quantity: trade.quantity
+          quantity: trade.quantity,
+          id: trade.id
         };
       });
     }
