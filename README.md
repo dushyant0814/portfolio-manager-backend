@@ -1,11 +1,11 @@
 # portfolio-manager-backend
-## health check 
+## 1. Description : Health Check
 ### responds with 200 status if the server is up.
 ```
 curl --location --request GET 'https://portfolio-manager-101.herokuapp.com/health'
 ```
 
-## Description : Creates user with following parameters
+## 2. Description : Creates user with following parameters
 #### **name : String**
 #### **username : String**
 #### **email : String**
@@ -26,7 +26,7 @@ curl --location --request GET 'https://portfolio-manager-101.herokuapp.com/healt
 }' 
 ```
 
-## Description : Logs in user with following parameter
+## 3. Description : Logs in user with following parameter
 #### **password : String**
 #### **email : String**
 ## Method: POST
@@ -41,7 +41,7 @@ curl --location --request POST 'https://portfolio-manager-101.herokuapp.com/auth
 }'
 ```
 
-## Description : User logout
+## 4. Description : User logout
 #### **Authorization token : String**
 ## Method: DELETE
 
@@ -52,7 +52,7 @@ curl --location --request DELETE 'https://portfolio-manager-101.herokuapp.com/au
 --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImVtYWlsIjoiaWFtZHVzaHlhbnQ4NjVAc3ByaW5ncm9sZS5jb20iLCJpZCI6NSwibmFtZSI6ImR1c2h5YW50In0sImlhdCI6MTYyODgwMTg2MiwiZXhwIjoxNjMyNDAxODYyfQ.9sYiiVZN0DTwBP1AC8VegXYMWRwWv0dTgC8SM-uEFmE'
 ```
 
-## Description: Fetch securities with following parameters
+## 5. Description: Fetch securities with following parameters
 #### **limit: Integer**
 #### **offset: Integer**
 ## Method: GET
@@ -62,7 +62,7 @@ curl --location --request DELETE 'https://portfolio-manager-101.herokuapp.com/au
 curl --location --request GET 'https://portfolio-manager-101.herokuapp.com/list?limit=10&offset=0'
 ```
 
-## Description: Add security with following parameters
+## 6. Description: Add security with following parameters
 #### **name: String**
 #### **ticker_symbol: String**
 ## Method: POST
@@ -78,7 +78,7 @@ curl --location --request POST 'https://portfolio-manager-101.herokuapp.com/secu
 ```
 
 
-## Description: Create's trade with following parameters
+## 7. Description: Create's trade with following parameters
 
 
 #### **Authorization token : String**
@@ -100,7 +100,7 @@ curl --location --request POST 'https://portfolio-manager-101.herokuapp.com/orde
     "quantity": 2
 }'
 ```
-## Description: Update an existing trade
+## 8. Description: Update an existing trade
 
 
 #### **Authorization token : String**
@@ -124,7 +124,7 @@ curl --location --request PUT 'https://portfolio-manager-101.herokuapp.com/order
     "trade_id": 8
 }'
 ```
-## Description: Delete an existing trade
+## 9. Description: Delete an existing trade
 #### **Authorization token : String**
 #### **trade_id: Integer**
 ## Method: DELETE
@@ -140,7 +140,7 @@ curl --location --request DELETE 'https://portfolio-manager-101.herokuapp.com/or
 
 ```
 
-## Description: Fetch existing trades
+## 10. Description: Fetch existing trades
 #### **Authorization token : String**
 #### **limit: Integer**
 #### **offset: Integer**
@@ -152,7 +152,7 @@ curl --location --request GET 'https://portfolio-manager-101.herokuapp.com/order
 --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImVtYWlsIjoiaWFtZHVzaHlhbnRAZ21haWwuY29tIiwiaWQiOjEsIm5hbWUiOiJkdXNoeWFudCJ9LCJpYXQiOjE2MjkwMjE2MzAsImV4cCI6MTYzMjYyMTYzMH0.9eqqN8LCu-b8N-GoTtAIvWoDSYsLkbiwnmvxAWxmiyQ'
 ```
 
-## Description: Fetches return
+## 11. Description: Fetches return
 #### **Authorization token : String**
 ## Fetches the return which the user makes on their portfolio
 ## Method: GET
@@ -164,7 +164,7 @@ curl --location --request GET 'https://portfolio-manager-101.herokuapp.com/order
 ```
 
 
-## Description: Fetch portfolio
+## 12. Description: Fetch portfolio
 #### **Authorization token : String**
 #### **limit: Integer**
 #### **offset: Integer**
