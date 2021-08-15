@@ -5,8 +5,15 @@
 curl --location --request GET 'http://localhost:3011/health'
 ```
 
-## create user
-### takes {name, username, email, password, mobile} as request parameters
+## Description : Creates user with following parameters
+### **name : String**
+### **username : String**
+### **email : String**
+### **name : String**
+### **mobile : String**
+
+## Method: POST
+## Returns a default portfolio id assigned to the user
 ```
  curl --location --request POST 'http://localhost:3011/auth/create' \
 --header 'Content-Type: application/json' \
@@ -19,10 +26,12 @@ curl --location --request GET 'http://localhost:3011/health'
 }' 
 ```
 
-## user login
+## Description : User login
+### **password : String**
+### **email : String**
+## Method: POST
 
-### takes {email , password} as request parameters
-
+## Returns a login token which will be used further in using trading APIs 
 ```
 curl --location --request POST 'http://localhost:3011/auth/login' \
 --header 'Content-Type: application/json' \
