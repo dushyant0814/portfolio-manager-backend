@@ -89,4 +89,42 @@ funcs.upsertTrade = async function ({
     throw e;
   }
 };
+
+funcs.fetchTrades = async function ({
+  portfolio_id,
+  limit = config.get('limit'),
+  offset = config.get('offset')
+}) {
+  return await orderManager.getTransactions({
+    limit,
+    offset: limit * offset,
+    query: { portfolio_id_fk: portfolio_id },
+    attributes: ['type_of_trade', 'security_id_fk', 'price', 'quantity'],
+    securityAttributes: ['ticker_symbol']
+  });
+};
+
+funcs.fetchPortfolio = async function ({
+  portfolio_id,
+  limit = config.get('limit'),
+  offset = config.get('offset')
+}) {
+  return await orderManager.getUserPortfolioInfo({
+    limit,
+    offset: limit * offset,
+    findAndCountAll: true,
+    query: { portfolio_id_fk: portfolio_id },
+    attributes: ['avg_buy_price', 'quantity', 'security_id_fk'],
+    securityAttributes: ['ticker_symbol']
+  });
+};
+
+funcs.fetchReturns = async function ({ portfolio_id }) {
+  return await orderManager.getUserPortfolioInfo({
+    findAll: true,
+    query: { portfolio_id_fk: portfolio_id },
+    attributes: ['avg_buy_price', 'quantity', 'security_id_fk'],
+    securityAttributes: ['ticker_symbol']
+  });
+};
 module.exports = funcs;
