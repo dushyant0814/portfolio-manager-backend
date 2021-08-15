@@ -1,4 +1,5 @@
 # portfolio-manager-backend
+hosted on : https://portfolio-manager-101.herokuapp.com
 ## 1. Description : Health Check
 ### responds with 200 status if the server is up.
 ```
