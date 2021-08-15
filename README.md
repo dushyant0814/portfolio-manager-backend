@@ -6,11 +6,11 @@ curl --location --request GET 'http://localhost:3011/health'
 ```
 
 ## Description : Creates user with following parameters
-### **name : String**
-### **username : String**
-### **email : String**
-### **name : String**
-### **mobile : String**
+#### **name : String**
+#### **username : String**
+#### **email : String**
+#### **name : String**
+#### **mobile : String**
 
 ## Method: POST
 ## Returns a default portfolio id assigned to the user
@@ -27,8 +27,8 @@ curl --location --request GET 'http://localhost:3011/health'
 ```
 
 ## Description : User login
-### **password : String**
-### **email : String**
+#### **password : String**
+#### **email : String**
 ## Method: POST
 
 ## Returns a login token which will be used further in using trading APIs 
