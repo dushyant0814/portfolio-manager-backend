@@ -1,4 +1,4 @@
-const orderManager = require('../sqlRepositories/orders');
+const orderManager = require('../sqlRepositories/managers/orders');
 const config = require('config');
 const sequelize = require('../sqlRepositories/models/index').sequelize;
 const utilityManager = require('../utils/utils');

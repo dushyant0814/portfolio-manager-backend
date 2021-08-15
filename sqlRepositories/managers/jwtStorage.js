@@ -1,4 +1,4 @@
-const { jwt_storage } = require('./models');
+const { jwt_storage } = require('../models');
 const config = require('config');
 let funcs = {};
 

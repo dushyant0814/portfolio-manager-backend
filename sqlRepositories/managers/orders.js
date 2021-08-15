@@ -1,4 +1,4 @@
-const { securities, transactions, user_portfolio_info, portfolio } = require('./models');
+const { securities, transactions, user_portfolio_info, portfolio } = require('../models');
 const config = require('config');
 /////////////////////////////MODEL-ASSOCIATIONS///////////////////////////////////////
 transactions.belongsTo(securities, { foreignKey: 'security_id_fk', targetKey: 'id' });

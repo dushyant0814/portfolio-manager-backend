@@ -1,4 +1,4 @@
-const { users, jwt_storage } = require('./models');
+const { users, jwt_storage } = require('../models');
 
 let funcs = {};
 
@@ -12,6 +12,5 @@ funcs.findUser = async function ({
 }) {
   return users.findOne({ where: query, attributes });
 };
-
 
 module.exports = funcs;
