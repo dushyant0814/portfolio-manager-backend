@@ -8,9 +8,9 @@ const jwt = require('jsonwebtoken');
 let funcs = {};
 
 funcs.createUser = async function ({ name, username, email, mobile, password }) {
-  if (await findUserWithEmail({ email })) {
+  if (await findUserWithEmailAndMobile({ query: { email, mobile } })) {
     throw {
-      message: `User with email ${email} already exists.`,
+      message: `User with email ${email} or ${mobile} already exists.`,
       status: config.get('httpStatusCodes.conflict')
     };
   }
@@ -49,7 +49,13 @@ funcs.createUser = async function ({ name, username, email, mobile, password }) 
 };
 
 funcs.login = async function ({ email, password }) {
-  const user = await findUserWithEmail({ email });
+  const user = await findUserWithEmailAndMobile({ query: { email } });
+  if (!user) {
+    throw {
+      message: `User with ${email} does not exist`,
+      status: config.get('httpStatusCodes.unauthorized')
+    };
+  }
   const passwordVerfied = await bcrypt.compare(password, user.password);
   if (!passwordVerfied) {
     throw {
@@ -63,7 +69,15 @@ funcs.login = async function ({ email, password }) {
     name: user.name,
     username: user.username
   });
-  return token;
+  return {
+    token,
+    token_details: {
+      id: user.id,
+      name: user.name,
+      username: user.username,
+      email: user.email
+    }
+  };
 };
 
 funcs.generateLoginJwt = async function ({ id, email, name, username }) {
@@ -90,7 +104,7 @@ funcs.logout = async function ({ token, user_id }) {
   if (!user_id || !token)
     throw {
       msg:
-        'user_id isnecessary field to process the request' +
+        'user_id is necessary field to process the request' +
         'token is also required, in case if you want to expire only single token',
       status: config.get('httpStatusCodes.badRequest')
     };
@@ -99,9 +113,9 @@ funcs.logout = async function ({ token, user_id }) {
 
 module.exports = funcs;
 
-async function findUserWithEmail({ email }) {
+async function findUserWithEmailAndMobile({ query }) {
   return await authManager.findUser({
-    query: { email },
+    query,
     attributes: ['id', 'name', 'password']
   });
 }

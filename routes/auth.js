@@ -5,7 +5,7 @@ const auth = require('../middlewares/auth');
 const requestHandler = require('./requestHandler');
 
 router.post(
-  '/create',
+  '/signup',
   requestHandler.handleRequest(async function (req, res, next) {
     return res
       .status(200)
@@ -21,6 +21,7 @@ router.post(
       .send({ message: 'success', token: (await service.login(req.body)) || {} });
   })
 );
+
 router.delete(
   '/logout',
   auth,
@@ -30,7 +31,7 @@ router.delete(
       data:
         (await service.logout({
           token: req.headers.authorization.slice(7),
-          user_id: req.decodedTokenData.id
+          user_id: req.decodedTokenData.data.id
         })) || {}
     });
   })

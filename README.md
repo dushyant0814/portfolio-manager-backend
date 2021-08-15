@@ -15,7 +15,7 @@ curl --location --request GET 'https://portfolio-manager-101.herokuapp.com/healt
 ## Method: POST
 ## Returns a default portfolio id assigned to the user
 ```
- curl --location --request POST 'https://portfolio-manager-101.herokuapp.com/auth/create' \
+ curl --location --request POST 'https://portfolio-manager-101.herokuapp.com/auth/signup' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "name": "dushyant",
@@ -166,12 +166,10 @@ curl --location --request GET 'https://portfolio-manager-101.herokuapp.com/order
 
 ## 12. Description: Fetch portfolio
 #### **Authorization token : String**
-#### **limit: Integer**
-#### **offset: Integer**
 ## Fetches user's portfolio
 ## Method: GET
 
 ```
-curl --location --request GET 'https://portfolio-manager-101.herokuapp.com/orders/portfolio?limit=10&page=0' \
---header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImVtYWlsIjoiaWFtZHVzaHlhbnRAZ21haWwuY29tIiwiaWQiOjEsIm5hbWUiOiJkdXNoeWFudCJ9LCJpYXQiOjE2MjkwMjE2MzAsImV4cCI6MTYzMjYyMTYzMH0.9eqqN8LCu-b8N-GoTtAIvWoDSYsLkbiwnmvxAWxmiyQ'
+curl --location --request GET 'https://portfolio-manager-101.herokuapp.com/orders/portfolio' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImVtYWlsIjoidHJpdmlrcmFtMTAxQGdtYWlsLmNvbSIsImlkIjoyLCJuYW1lIjoidHJpdmlrcmFtIn0sImlhdCI6MTYyOTA1NjQ5OCwiZXhwIjoxNjMyNjU2NDk4fQ.4hwcIUNOjVXcH3nc99ndC2Kxr61qCqo8Al_JGSRdBZA'
 ```

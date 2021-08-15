@@ -13,7 +13,7 @@ module.exports = {
       model.quantity = portfolioInstance.quantity - newTrasaction.quantity;
       if (model.quantity < 0) {
         throw {
-          message: `Invalid order placed,quantity of shares in the portfolio cannot be negative`,
+          message: `Invalid order placed,quantity of shares to be sold cannot be greater than those which are present in the Portfolio`,
           status: config.get('httpStatusCodes.badRequest')
         };
       }

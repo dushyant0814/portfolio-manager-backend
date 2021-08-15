@@ -12,8 +12,6 @@ funcs.createTrade = function ({ model }, transaction = null) {
 
 funcs.getUserPortfolioInfo = function ({
   query,
-  limit = config.get('limit'),
-  offset = config.get('offset'),
   securityAttributes = { exclude: ['created_at', 'updated_at', 'deleted_at'] },
   findAndCountAll = false,
   findAll = false,
@@ -21,10 +19,9 @@ funcs.getUserPortfolioInfo = function ({
 }) {
   if (findAndCountAll) {
     return user_portfolio_info.findAndCountAll({
-      limit,
-      offset,
       where: query,
       attributes,
+      order: [['created_at', 'DESC']],
       include: [
         {
           model: securities,
@@ -85,6 +82,7 @@ funcs.getTransactions = function ({
     offset,
     where: query,
     attributes,
+    order: [['created_at', 'DESC']],
     include: [
       {
         model: securities,

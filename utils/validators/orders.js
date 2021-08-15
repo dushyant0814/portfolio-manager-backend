@@ -43,22 +43,7 @@ const validators = {
           }
         })
     ],
-    '/portfolio': [
-      query('offset')
-        .optional()
-        .customSanitizer((value) => {
-          if (value) {
-            return parseInt(value);
-          }
-        }),
-      query('limit')
-        .optional()
-        .customSanitizer((value) => {
-          if (value) {
-            return parseInt(value);
-          }
-        })
-    ],
+    '/portfolio': [],
     '/returns': []
   },
   put: {
