@@ -62,7 +62,7 @@ curl --location --request DELETE 'https://portfolio-manager-101.herokuapp.com/au
 curl --location --request GET 'https://portfolio-manager-101.herokuapp.com/list?limit=10&offset=0'
 ```
 
-## Description: Add securitywith following parameters
+## Description: Add security with following parameters
 #### **name: String**
 #### **ticker_symbol: String**
 ## Method: POST
