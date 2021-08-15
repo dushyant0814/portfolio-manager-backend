@@ -6,11 +6,11 @@ user_portfolio_info.belongsTo(securities, { foreignKey: 'security_id_fk', target
 //////////////////////////////////////////////////////////////////////////////////////
 let funcs = {};
 
-funcs.createTrade = async function ({ model }, transaction = null) {
+funcs.createTrade = function ({ model }, transaction = null) {
   return transactions.create(model, { transaction });
 };
 
-funcs.getUserPortfolioInfo = async function ({
+funcs.getUserPortfolioInfo = function ({
   query,
   limit = config.get('limit'),
   offset = config.get('offset'),
@@ -50,26 +50,26 @@ funcs.getUserPortfolioInfo = async function ({
   return user_portfolio_info.findOne({ where: query, attributes });
 };
 
-funcs.createUserPortfolioInfo = async function ({ model }, transaction = null) {
+funcs.createUserPortfolioInfo = function ({ model }, transaction = null) {
   return user_portfolio_info.create(model, { transaction });
 };
 
-funcs.updateUserPortfolioInfo = async function ({ model, portfolioInstance }, transaction = null) {
+funcs.updateUserPortfolioInfo = function ({ model, portfolioInstance }, transaction = null) {
   return portfolioInstance.update(model, { transaction });
 };
 
-funcs.createPortfolio = async function ({ model }, transaction) {
+funcs.createPortfolio = function ({ model }, transaction) {
   return portfolio.create(model, { transaction });
 };
 
-funcs.getPortfolio = async function ({
+funcs.getPortfolio = function ({
   query,
   attributes = { exclude: ['created_at', 'updated_at', 'deleted_at'] }
 }) {
   return portfolio.findOne({ where: query, attributes });
 };
 
-funcs.getTransactions = async function ({
+funcs.getTransactions = function ({
   limit = config.get('limit'),
   offset = config.get('offset'),
   query,
@@ -95,10 +95,10 @@ funcs.getTransactions = async function ({
   });
 };
 
-funcs.deleteTransaction = async function ({ query }, transaction) {
+funcs.deleteTransaction = function ({ query }, transaction) {
   return transactions.destroy({ where: query, transaction });
 };
-funcs.updateTransaction = async function ({ model, lastTransactionInstance }, transaction = null) {
+funcs.updateTransaction = function ({ model, lastTransactionInstance }, transaction = null) {
   return lastTransactionInstance.update(model, { transaction });
 };
 

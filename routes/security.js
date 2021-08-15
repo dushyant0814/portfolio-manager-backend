@@ -23,7 +23,7 @@ router.get(
       message: 'success',
       data:
         (await service.getSecurities({
-          ...req.body
+          ...req.query
         })) || {}
     });
   })

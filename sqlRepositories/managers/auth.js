@@ -2,11 +2,11 @@ const { users } = require('../models');
 
 let funcs = {};
 
-funcs.createUser = async function ({ model }, transaction) {
+funcs.createUser = function ({ model }, transaction) {
   return users.create(model, { transaction });
 };
 
-funcs.findUser = async function ({
+funcs.findUser = function ({
   query,
   attributes = { exclude: ['created_at', 'updated_at', 'deleted_at'] }
 }) {

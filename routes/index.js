@@ -2,6 +2,7 @@ const express = require('express');
 const authRoutes = require('./auth');
 const auth = require('../middlewares/auth');
 const orderRoutes = require('./orders');
+const sercurityRoutes = require('./security');
 const router = express.Router();
 
 router.use('/health', (req, res) => {
@@ -10,6 +11,7 @@ router.use('/health', (req, res) => {
   });
 });
 router.use('/auth', authRoutes);
+router.use('/security', sercurityRoutes);
 router.use('/orders', auth, orderRoutes);
 router.use(function (req, res) {
   let path = req._parsedUrl.pathname.toLowerCase();

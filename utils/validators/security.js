@@ -9,11 +9,13 @@ const validators = {
         .exists()
         .withMessage('field is required')
         .customSanitizer((value) => {
-          if (value.length > 5)
+          if (value.length > 5) {
             throw {
               message: 'field cannot exceed length of 5 characters',
               status: config.get('httpStatusCodes.badRequest')
             };
+          }
+          return value;
         })
     ]
   },
