@@ -9,7 +9,7 @@ router.post(
     return res.status(200).send({
       message: 'success',
       data:
-        (await service.upsertTrade({
+        (await service.addTrade({
           ...req.body,
           portfolio_id: req.decodedTokenData.data.portfolio_id
         })) || {}
