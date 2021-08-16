@@ -99,7 +99,7 @@ funcs.updateTrade = async function ({
   delete_trade = false
 }) {
   const doesSecurityExists = await findSecurityWithId({ stock_id });
-  if (!doesSecurityExists) {
+  if (!doesSecurityExists && !delete_trade) {
     throw {
       message: `no such stock/security exists with id:${stock_id}`,
       status: config.get('httpStatusCodes.badRequest')
@@ -134,8 +134,7 @@ funcs.updateTrade = async function ({
         //if the last trade id with id = {trade_id} was the only transaction user made  for that particular stock
         //this would mean that we have to remove that particular stock from the portfolio
         if (resetTradeFromUserPortfolioModel.quantity === 0) {
-          await portfolioInstance.destroy({ transaction });
-          return null;
+          return { deleteOldPortfolioEntryForTheStock: await portfolioInstance.destroy() };
         }
         //other wise need to reset the portfolio before update with id = {trade_id} took place
         return await orderManager.updateUserPortfolioInfo(
@@ -164,7 +163,7 @@ funcs.updateTrade = async function ({
       updatePortfolioWithNewTrade: async function () {
         if (delete_trade) return null;
         //updating the portfolio with the updated trade
-        return handleUpdateInPortfolio(
+        return await handleUpdateInPortfolio(
           { type, stock_id, price, quantity, portfolio_id },
           transaction
         );
