@@ -129,12 +129,14 @@ funcs.updateTrade = async function ({
   const transaction = await sequelize.transaction();
   let response;
   try {
-    response = await async.autoInject({
+    response = await async.series({
       resetPortfolioFromLastTrade: async function () {
         //if the last trade id with id = {trade_id} was the only transaction user made  for that particular stock
         //this would mean that we have to remove that particular stock from the portfolio
         if (resetTradeFromUserPortfolioModel.quantity === 0) {
-          return { deleteOldPortfolioEntryForTheStock: await portfolioInstance.destroy() };
+          return {
+            deleteOldPortfolioEntryForTheStock: await portfolioInstance.destroy({ transaction })
+          };
         }
         //other wise need to reset the portfolio before update with id = {trade_id} took place
         return await orderManager.updateUserPortfolioInfo(
@@ -189,7 +191,8 @@ async function handleUpdateInPortfolio(
   transaction
 ) {
   const portfolioInstance = await orderManager.getUserPortfolioInfo({
-    query: { security_id_fk: stock_id, portfolio_id_fk: portfolio_id }
+    query: { security_id_fk: stock_id, portfolio_id_fk: portfolio_id },
+    transaction
   });
   if (!portfolioInstance && type == config.get('trade.type.SELL')) {
     throw {

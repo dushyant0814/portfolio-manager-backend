@@ -15,7 +15,8 @@ funcs.getUserPortfolioInfo = function ({
   securityAttributes = { exclude: ['created_at', 'updated_at', 'deleted_at'] },
   findAndCountAll = false,
   findAll = false,
-  attributes = { exclude: ['created_at', 'updated_at', 'deleted_at'] }
+  attributes = { exclude: ['created_at', 'updated_at', 'deleted_at'] },
+  transaction = null
 }) {
   if (findAndCountAll) {
     return user_portfolio_info.findAndCountAll({
@@ -44,7 +45,7 @@ funcs.getUserPortfolioInfo = function ({
       ]
     });
   }
-  return user_portfolio_info.findOne({ where: query, attributes });
+  return user_portfolio_info.findOne({ where: query, attributes, transaction });
 };
 
 funcs.createUserPortfolioInfo = function ({ model }, transaction = null) {
