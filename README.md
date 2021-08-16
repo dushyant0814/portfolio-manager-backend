@@ -1,6 +1,9 @@
 # portfolio-manager-backend
 ### hosted on : https://portfolio-manager-101.herokuapp.com
 ### postman collection : https://www.getpostman.com/collections/32497d9756d0fd56eb4d
+## ER diagram
+![image](https://user-images.githubusercontent.com/74704764/129491155-41420fb9-4f86-4ec3-8e5b-75f47de5a4e1.png)
+
 ## 1. Description : Health Check
 ### responds with 200 status if the server is up.
 ```
