@@ -2,6 +2,7 @@ const orderManager = require('../sqlRepositories/managers/orders');
 const config = require('config');
 const sequelize = require('../sqlRepositories/models/index').sequelize;
 const utilityManager = require('../utils/utils');
+const securityManager = require('../sqlRepositories/managers/security');
 const async = require('async');
 let funcs = {};
 
@@ -13,6 +14,13 @@ funcs.addTrade = async function ({
   quantity = null,
   portfolio_id = null
 }) {
+  const doesSecurityExists = await findSecurityWithId({ stock_id });
+  if (!doesSecurityExists) {
+    throw {
+      message: `no such stock/security exists with id:${stock_id}`,
+      status: config.get('httpStatusCodes.badRequest')
+    };
+  }
   const transaction = await sequelize.transaction();
   let response;
   try {
@@ -90,6 +98,13 @@ funcs.updateTrade = async function ({
   trade_id = null,
   delete_trade = false
 }) {
+  const doesSecurityExists = await findSecurityWithId({ stock_id });
+  if (!doesSecurityExists) {
+    throw {
+      message: `no such stock/security exists with id:${stock_id}`,
+      status: config.get('httpStatusCodes.badRequest')
+    };
+  }
   //fetching the trade details which we need to update
   const lastTransactionInstance = await orderManager.getTransactions({
     findOne: true,
@@ -101,7 +116,7 @@ funcs.updateTrade = async function ({
       message: `No transaction exist with trade_id ${trade_id}`,
       status: config.get('httpStatusCodes.badRequest')
     };
-  //fetching the portfolio 
+  //fetching the portfolio
   const portfolioInstance = await orderManager.getUserPortfolioInfo({
     query: { portfolio_id_fk: portfolio_id, security_id_fk: lastTransactionInstance.security_id_fk }
   });
@@ -214,4 +229,9 @@ async function handleUpdateInPortfolio(
     );
   }
   return { createUserPortfolioInfo, updateUserPortfolioInfo };
+}
+
+async function findSecurityWithId({ stock_id }) {
+  const response = await securityManager.getSecurities({ query: { id: stock_id }, findOne: true });
+  return response;
 }
