@@ -5,6 +5,11 @@ const fs = require('fs');
 const { validationResult } = require('express-validator');
 let validators = {};
 
+/*
+with the help of this function we can re-direct validations of a particular route to their respective
+file in utils/validator folder, will also handle writing try-catches inside functions
+*/
+
 funcs.handleRequest = (func) => async (req, res, next) => {
   let endPointName = req._parsedUrl.pathname.toLowerCase();
   let protocolName = req.method.toLowerCase();

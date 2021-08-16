@@ -1,6 +1,7 @@
 const config = require('config');
 
 module.exports = {
+  //gets portfolio model after adjusting the last trade which was made
   createPortfolioModel: function ({ portfolioInstance, newTrasaction }) {
     let model = {};
     if (newTrasaction.type === config.get('trade.type.BUY')) {
@@ -20,6 +21,7 @@ module.exports = {
     }
     return model;
   },
+  //gets portfolio model after resetting the last trade made
   getLastPortfolioInfo: function ({ portfolioInstance, lastTransactionInstance }) {
     let model = {};
     model.quantity = portfolioInstance.quantity - lastTransactionInstance.quantity;

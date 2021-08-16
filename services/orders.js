@@ -5,6 +5,7 @@ const utilityManager = require('../utils/utils');
 const async = require('async');
 let funcs = {};
 
+//adds a trade to the system
 funcs.addTrade = async function ({
   type = null,
   stock_id = null,
@@ -31,6 +32,7 @@ funcs.addTrade = async function ({
           transaction
         );
       },
+      //new trade may affect the user portfolio
       portfolioUpdateResponse: async function () {
         return handleUpdateInPortfolio({ type, stock_id, price, quantity, portfolio_id });
       }
@@ -43,6 +45,7 @@ funcs.addTrade = async function ({
   }
 };
 
+//fetches all the trades made by the particular user
 funcs.fetchTrades = async function ({
   portfolio_id,
   limit = config.get('limit'),
@@ -57,6 +60,7 @@ funcs.fetchTrades = async function ({
   });
 };
 
+//fetches user portfolio
 funcs.fetchPortfolio = async function ({ portfolio_id }) {
   return await orderManager.getUserPortfolioInfo({
     findAndCountAll: true,
@@ -66,6 +70,7 @@ funcs.fetchPortfolio = async function ({ portfolio_id }) {
   });
 };
 
+//fetches cumulative sum of the returns from user's portfolio
 funcs.fetchReturns = async function ({ portfolio_id }) {
   return await orderManager.getUserPortfolioInfo({
     findAll: true,
@@ -75,6 +80,7 @@ funcs.fetchReturns = async function ({ portfolio_id }) {
   });
 };
 
+//updating an existing trade
 funcs.updateTrade = async function ({
   type = null,
   stock_id = null,
@@ -84,6 +90,7 @@ funcs.updateTrade = async function ({
   trade_id = null,
   delete_trade = false
 }) {
+  //fetching the trade details which we need to update
   const lastTransactionInstance = await orderManager.getTransactions({
     findOne: true,
     query: { id: trade_id },
@@ -94,10 +101,12 @@ funcs.updateTrade = async function ({
       message: `No transaction exist with trade_id ${trade_id}`,
       status: config.get('httpStatusCodes.badRequest')
     };
+  //fetching the portfolio 
   const portfolioInstance = await orderManager.getUserPortfolioInfo({
     query: { portfolio_id_fk: portfolio_id, security_id_fk: lastTransactionInstance.security_id_fk }
   });
-  //need to reset portfolio to it's last updated state
+  //resetting the portfolio to the state before which update with id = { trade_id } took place.
+  //we are doing this as in updating a trade user can update the {stock_id} too
   const resetTradeFromUserPortfolioModel = utilityManager.getLastPortfolioInfo({
     portfolioInstance,
     lastTransactionInstance
@@ -107,10 +116,13 @@ funcs.updateTrade = async function ({
   try {
     response = await async.autoInject({
       resetPortfolioFromLastTrade: async function () {
+        //if the last trade id with id = {trade_id} was the only transaction user made  for that particular stock
+        //this would mean that we have to remove that particular stock from the portfolio
         if (resetTradeFromUserPortfolioModel.quantity === 0) {
           await portfolioInstance.destroy({ transaction });
           return null;
         }
+        //other wise need to reset the portfolio before update with id = {trade_id} took place
         return await orderManager.updateUserPortfolioInfo(
           { model: resetTradeFromUserPortfolioModel, portfolioInstance },
           transaction
@@ -118,6 +130,7 @@ funcs.updateTrade = async function ({
       },
       updateTransaction: async function () {
         if (delete_trade) return null;
+        //updating the transaction
         return await orderManager.updateTransaction(
           {
             model: {
@@ -135,6 +148,7 @@ funcs.updateTrade = async function ({
       },
       updatePortfolioWithNewTrade: async function () {
         if (delete_trade) return null;
+        //updating the portfolio with the updated trade
         return handleUpdateInPortfolio(
           { type, stock_id, price, quantity, portfolio_id },
           transaction
@@ -142,6 +156,7 @@ funcs.updateTrade = async function ({
       },
       deleteTrade: async function () {
         if (!delete_trade) return null;
+        //deletes the trade if the flag delete_trade is present
         return await orderManager.deleteTransaction({ query: { id: trade_id } }, transaction);
       }
     });
@@ -164,7 +179,7 @@ async function handleUpdateInPortfolio(
   });
   if (!portfolioInstance && type == config.get('trade.type.SELL')) {
     throw {
-      message: `User doesn't hold this security which they can sell`,
+      message: `User doesn't hold this security/stock in their portfolio which they can sell`,
       status: config.get('httpStatusCodes.badRequest')
     };
   }
@@ -184,7 +199,7 @@ async function handleUpdateInPortfolio(
       transaction
     );
   } else {
-    //need to adjust portfolio for that particular stock id
+    //need to adjust portfolio for that particular stock
     const model = utilityManager.createPortfolioModel({
       portfolioInstance: portfolioInstance,
       newTrasaction: {

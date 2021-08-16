@@ -27,6 +27,7 @@ module.exports = async (req, res, next) => {
       query: { user_id_fk: decodedToken.data.id },
       attributes: ['id']
     });
+    //storing the portfolio_id which was assigned to the user inside the token for easy-access
     decodedToken.data.portfolio_id = userPortfolioId.id;
     req.decodedTokenData = decodedToken;
     next();

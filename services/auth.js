@@ -8,6 +8,7 @@ const jwt = require('jsonwebtoken');
 let funcs = {};
 
 funcs.createUser = async function ({ name, username, email, mobile, password }) {
+  //if user is already present with email or mobile throws error
   if (await findUserWithEmailAndMobile({ query: { email, mobile } })) {
     throw {
       message: `User with email ${email} or ${mobile} already exists.`,
@@ -28,6 +29,7 @@ funcs.createUser = async function ({ name, username, email, mobile, password }) 
       },
       transaction
     );
+    //creating a default portfolio for the user
     const portfolioResponse = await orderManager.createPortfolio(
       {
         model: {
@@ -63,6 +65,7 @@ funcs.login = async function ({ email, password }) {
       status: config.get('httpStatusCodes.unauthorized')
     };
   }
+  //storing tokens for authentication purpose
   const token = await funcs.generateLoginJwt({
     email,
     id: user.id,
@@ -99,7 +102,7 @@ funcs.generateLoginJwt = async function ({ id, email, name, username }) {
   await jwtResolvers.setJwt({ token: jwtToken, user_id: id });
   return jwtToken;
 };
-
+//expires the particular token
 funcs.logout = async function ({ token, user_id }) {
   if (!user_id || !token)
     throw {

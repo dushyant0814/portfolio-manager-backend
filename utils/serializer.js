@@ -1,4 +1,5 @@
 const config = require('config');
+//serializes response for GET APIs
 
 module.exports = {
   fetchUserTrades: function (transactions) {
