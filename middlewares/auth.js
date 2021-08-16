@@ -1,5 +1,6 @@
 const config = require('config');
 const jwt = require('jsonwebtoken');
+const { jwt_storage } = require('../sqlRepositories/models');
 const orderManager = require('../sqlRepositories/managers/orders');
 
 module.exports = async (req, res, next) => {
@@ -15,6 +16,13 @@ module.exports = async (req, res, next) => {
 
   try {
     const decodedToken = await jwt.verify(token, config.get('auth.company_secret'));
+    const jwtStorageResponse = await jwt_storage.findOne({ where: { token } });
+    if (jwtStorageResponse.expires_at) {
+      throw {
+        message: `JWT token has already been expired`,
+        status: config.get('httpStatusCodes.unauthorized')
+      };
+    }
     const userPortfolioId = await orderManager.getPortfolio({
       query: { user_id_fk: decodedToken.data.id },
       attributes: ['id']
@@ -23,9 +31,13 @@ module.exports = async (req, res, next) => {
     req.decodedTokenData = decodedToken;
     next();
   } catch (e) {
-    return res.status(401).send({
-      msg: 'JWT token failed to verify',
-      description: 'Please share correct token'
-    });
+    return res.status(401).send(
+      e.message
+        ? e
+        : {
+            msg: 'JWT token failed to verify',
+            description: 'Please share correct token'
+          }
+    );
   }
 };
