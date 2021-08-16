@@ -51,7 +51,13 @@ funcs.createUserPortfolioInfo = function ({ model }, transaction = null) {
   return user_portfolio_info.create(model, { transaction });
 };
 
-funcs.updateUserPortfolioInfo = function ({ model, portfolioInstance }, transaction = null) {
+funcs.updateUserPortfolioInfo = function (
+  { model, portfolioInstance, destroy = false },
+  transaction = null
+) {
+  if (destroy) {
+    return portfolioInstance.destroy();
+  }
   return portfolioInstance.update(model, { transaction });
 };
 
