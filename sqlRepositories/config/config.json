@@ -15,9 +15,9 @@
     }
   },
   "production": {
-    "username": "sql6431060",
-    "password": "LAaFVYjkAS",
-    "database": "sql6431060",
+    "username": "sql6432467",
+    "password": "IF1TmENTTy",
+    "database": "sql6432467",
     "host": "sql6.freemysqlhosting.net",
     "port": "3306",
     "dialect": "mysql",
