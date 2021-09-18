@@ -15,10 +15,10 @@
     }
   },
   "production": {
-    "username": "sql6432467",
-    "password": "IF1TmENTTy",
-    "database": "sql6432467",
-    "host": "sql6.freemysqlhosting.net",
+    "username": "your_username",
+    "password": "your_password",
+    "database": "potrfolio-manager",
+    "host": "127.0.0.1",
     "port": "3306",
     "dialect": "mysql",
     "timezone": "+05:30",
